@@ -40,8 +40,10 @@ def main():
         scoreList = res2["score"]
         res3 = res["output"][2]
         nameList = res3["name"]
-        scoreRes = {i:j for i,j in zip(nameList,scoreList)}
+        scoreRes = {i:round(j,4) for i,j in zip(nameList,scoreList)}
+        totScore = (sum(scoreList)/len(scoreList))*100
         print(res1)
+        st.write("Total score is:",round(totScore,4),"%")
         if len(res1["issues"]) == 0:
             st.write("valid image with score of :",scoreRes)  
         else:

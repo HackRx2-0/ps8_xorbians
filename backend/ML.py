@@ -47,7 +47,7 @@ def ML(path):
 		issues.append("More than one face detected - Total number = "+str(len(bbox)))
 		numFaceDetect = sum(confidences[1:])/len(confidences[1:])
 		issues.append("Multiple faces detected")
-		out = jsonable_encoder({"output":[{'issues':issues},{'score':[float(numFaceDetect)]},{'name':['Probability of multiple face detection']}]})
+		out = jsonable_encoder({"output":[{'issues':issues},{'score':[float(1-numFaceDetect)]},{'name':['Probability of multiple face detection']}]})
 		return out
 		#bbox = bbox[0]
 	elif len(bbox)==1:
@@ -101,19 +101,19 @@ def ML(path):
 	if lowLight:
 		issues.append("low light")
 		name.append("Low light detection")
-		score.append(float(score_lowLight))
+		score.append(float(1-score_lowLight))
 	else:
 		name.append("Not low lighting")
-		score.append(float(score_lowLight))
+		score.append(float(1-score_lowLight))
 	
 	highLight,score_highLight = high_light_detection(original)
 	if highLight:
 		issues.append("Bright light")
 		name.append("Bright light detection")
-		score.append(float(score_highLight))
+		score.append(float(1-score_highLight))
 	else:
 		name.append("Not bright lighting")
-		score.append(float(score_highLight))
+		score.append(float(1-score_highLight))
 	
 	
 	end = time.time()
