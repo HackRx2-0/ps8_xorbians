@@ -7,4 +7,4 @@ def check_blur(img):
 		blur = True
 	else:
 		blur = False
-	return sobelxy, blur
+	return sobelxy, blur, 1/(1+np.exp(50-np.std(sobelxy)))

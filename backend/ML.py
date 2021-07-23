@@ -2,6 +2,7 @@ from opencv_dnn.detect import Detect
 from statical_methods.blur import check_blur
 from statical_methods.size import check_dimensions
 from checkReal.realFakeDetect import check_real
+from fastapi.encoders import jsonable_encoder
 import cv2
 import numpy as np
 import time
@@ -11,14 +12,21 @@ def ML(path):
 	path_OG = np.array(path)
 	path = cv2.cvtColor(path_OG, cv2.COLOR_RGB2BGR)
 
-	print(path)
-	print(path.shape)
+	# print(path)
+	# print(path.shape)
 	start = time.time()
 	save = True
 	issues = []
-	
+	score = []
+	name = []
 	d = Detect()
-	original, detected, bbox = d.detect_in_image(path)
+	original, detected, bbox, confidences = d.detect_in_image(path)
+	try:
+		confidenceDetect = sum(confidences)/len(confidences)
+	except:
+		confidenceDetect = float(0)
+	score.append(float(confidenceDetect))
+	name.append("confidence")
 	if save:
 		cv2.imwrite('./output/detected.jpg', detected)
 	if len(bbox)>1:
@@ -28,29 +36,40 @@ def ML(path):
 		bbox = bbox[0]
 	else:
 		issues.append("No faces detected")
-		return {'issues':issues}
+		out = jsonable_encoder({"output":[{'issues':issues},{'score':[1]},{'name':['No face score']}]})
+		return out
 	
 	x,y,x1,y1 = bbox
 	img = original[y:y1, x:x1, :]
 	
-	sobel, blur = check_blur(img)
+	sobel, blur, blurScore = check_blur(img)
 	if save:
 		cv2.imwrite('./output/sobel_edge.jpg', sobel)
 	if blur:
 		issues.append("Face is Blurred")
-
+		score.append(float(1-float(blurScore)))
+		name.append("blurred image score")
+	else:
+		score.append(float(blurScore))
+		name.append("Not blurred image score")
 	resized, small = check_dimensions(original, img)
 	if save:
 		cv2.imwrite('./output/resized.jpg', resized)
 	if small:
 		issues.append("Too small")
 
-	fake = check_real(resized[:,:,:])
+	fake,score_realFake = check_real(resized[:,:,:])
 	if fake:
 		issues.append("Fake image")
+		name.append("fake image score")
+		score.append(float(score_realFake))
+	else:
+		name.append("real image score")
+		score.append(float(score_realFake))
 	end = time.time()
-	print("time : ",end-start)
-	return {'issues':issues}
+	# print("time : ",end-start)
+	out = jsonable_encoder({"output":[{'issues':issues},{'score':score},{"name":name}]})
+	return out
 
 if __name__ == '__main__':
 	path = './images/'
