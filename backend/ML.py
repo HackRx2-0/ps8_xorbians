@@ -11,11 +11,10 @@
 
 from opencv_dnn.detect import Detect
 from statical_methods.blur import check_blur
-from statical_methods.size import check_dimensions
+from statical_methods.size import check_dimensions, aspect_ratio
 from checkReal.realFakeDetect import check_real
 from checkObstruction.maskDetect import check_obstruct
-from lighthingDetect.lightDetect import low_light_detection
-from lighthingDetect.lightDetect import high_light_detection
+from lighthingDetect.lightDetect import low_light_detection, high_light_detection
 from fastapi.encoders import jsonable_encoder
 import cv2
 import numpy as np
@@ -88,7 +87,7 @@ def ML(path):
 	else:
 		name.append("Not bright lighting")
 		score.append(float(1-score_highLight))
-	
+
 	resized, small,scalePercent = check_dimensions(original, img)
 	if save:
 		cv2.imwrite('./output/resized.jpg', resized)
@@ -97,6 +96,10 @@ def ML(path):
 	score.append(float(1/scalePercent))
 	name.append("Ratio of scaling required")
 
+	thumbnail = aspect_ratio(original,bbox, scalePercent)
+	if save:
+		cv2.imwrite('./output/thumbnail.jpg',thumbnail)
+	
 	obstruct,score_Obstruct = check_obstruct(resized[:,:,:])
 	if obstruct:
 		issues.append("Obstructed face")

@@ -7,6 +7,7 @@ import urllib
 import cv2
 import numpy as np
 from PIL import Image
+import time
 
 api_access = r'http://localhost:8000'
 
@@ -32,6 +33,7 @@ def main():
         img = load_image(uploaded_file)
         st.image(img, channels="RGB")
         upload_uri = api_access+'/api/postImage/'
+        startTime = time.time()
         response = requests.post(url = upload_uri, files = files)
         res = response.json()
         print(res)
@@ -48,6 +50,8 @@ def main():
             st.write("valid image with score of :",scoreRes)  
         else:
             st.write("Invalid image with score of",res1,scoreRes)
+        end = time.time()
+        st.write("Total response time (in seconds) :",round(end-startTime,4))
 
 
 if __name__ == "__main__":
