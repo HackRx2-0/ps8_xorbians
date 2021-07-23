@@ -1,5 +1,5 @@
 '''
-1. face detection confidence -ok
+1. face detection confidence 
 2. No. of faces detected
 3. Blur image detection
 4. Image if small/no detection
@@ -40,7 +40,7 @@ def ML(path):
 	except:
 		confidenceDetect = float(0)
 	score.append(float(confidenceDetect))
-	name.append("confidence")
+	name.append("Confidence")
 	if save:
 		cv2.imwrite('./output/detected.jpg', detected)
 	if len(bbox)>1:
@@ -70,36 +70,10 @@ def ML(path):
 	else:
 		score.append(float(blurScore))
 		name.append("Not blurred image score")
-	
-	resized, small,scalePercent = check_dimensions(original, img)
-	if save:
-		cv2.imwrite('./output/resized.jpg', resized)
-	if small:
-		issues.append("Too small")
-	score.append(float(1/scalePercent))
-	name.append("Ratio of scaling required")
 
-	fake,score_realFake = check_real(resized[:,:,:])
-	if fake:
-		issues.append("Fake image")
-		name.append("Fake image score")
-		score.append(float(score_realFake))
-	else:
-		name.append("Real image score")
-		score.append(float(score_realFake))
-
-	obstruct,score_Obstruct = check_obstruct(resized[:,:,:])
-	if obstruct:
-		issues.append("Obstructed face")
-		name.append("Obstructed face detection")
-		score.append(float(score_Obstruct))
-	else:
-		name.append("No obstruction detection")
-		score.append(float(score_Obstruct))
-	
 	lowLight,score_lowLight = low_light_detection(original)
 	if lowLight:
-		issues.append("low light")
+		issues.append("Low light")
 		name.append("Low light detection")
 		score.append(float(1-score_lowLight))
 	else:
@@ -114,6 +88,32 @@ def ML(path):
 	else:
 		name.append("Not bright lighting")
 		score.append(float(1-score_highLight))
+	
+	resized, small,scalePercent = check_dimensions(original, img)
+	if save:
+		cv2.imwrite('./output/resized.jpg', resized)
+	if small:
+		issues.append("Too small")
+	score.append(float(1/scalePercent))
+	name.append("Ratio of scaling required")
+
+	obstruct,score_Obstruct = check_obstruct(resized[:,:,:])
+	if obstruct:
+		issues.append("Obstructed face")
+		name.append("Obstructed face detection")
+		score.append(float(score_Obstruct))
+	else:
+		name.append("No obstruction detection")
+		score.append(float(score_Obstruct))
+	
+	fake,score_realFake = check_real(resized[:,:,:])
+	if fake:
+		issues.append("Fake image")
+		name.append("Fake image score")
+		score.append(float(score_realFake))
+	else:
+		name.append("Real image score")
+		score.append(float(score_realFake))
 	
 	
 	end = time.time()
