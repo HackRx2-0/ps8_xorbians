@@ -4,6 +4,8 @@ import json
 import requests
 import io
 import urllib
+import cv2
+import numpy as np
 from PIL import Image
 
 api_access = r'http://localhost:8000'
@@ -12,6 +14,10 @@ api_access = r'http://localhost:8000'
 def image_out(image):
     return Image.open(image)
 
+def load_image(img):
+    im = Image.open(img)
+    image = np.array(im)
+    return image
 
 def main():
     uploaded_file = st.file_uploader("Upload Files",type=['png','jpeg','jpg'])
@@ -23,9 +29,15 @@ def main():
         files = {
             "imageFile": uploaded_file.read()
         }
+        img = load_image(uploaded_file)
+        st.image(img, channels="RGB")
         upload_uri = api_access+'/api/postImage/'
-        response = requests.post(url = upload_uri, files = files)    
-        st.write(response.json())
+        response = requests.post(url = upload_uri, files = files)
+        res = response.json()
+        if len(res["issues"]) == 0:
+            st.write("valid image")  
+        else:
+            st.write(response.json())
 
 
 if __name__ == "__main__":

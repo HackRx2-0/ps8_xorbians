@@ -11,8 +11,8 @@ def ML(path):
 	path_OG = np.array(path)
 	path = cv2.cvtColor(path_OG, cv2.COLOR_RGB2BGR)
 
-	print(path)
-	print(path.shape)
+	# print(path)
+	# print(path.shape)
 	start = time.time()
 	save = True
 	issues = []
@@ -49,7 +49,7 @@ def ML(path):
 	if fake:
 		issues.append("Fake image")
 	end = time.time()
-	print("time : ",end-start)
+	# print("time : ",end-start)
 	return {'issues':issues}
 
 if __name__ == '__main__':
