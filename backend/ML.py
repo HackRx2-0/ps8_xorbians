@@ -4,6 +4,7 @@ from statical_methods.size import check_dimensions
 from checkReal.realFakeDetect import check_real
 from checkObstruction.maskDetect import check_obstruct
 from lighthingDetect.lightDetect import low_light_detection
+from lighthingDetect.lightDetect import high_light_detection
 from fastapi.encoders import jsonable_encoder
 import cv2
 import numpy as np
@@ -82,10 +83,19 @@ def ML(path):
 	if lowLight:
 		issues.append("low light")
 		name.append("low light detection")
-		score.append(float(score_Obstruct))
+		score.append(float(score_lowLight))
 	else:
-		name.append("normal lighting")
-		score.append(float(score_Obstruct))
+		name.append("not low lighting")
+		score.append(float(score_lowLight))
+	
+	highLight,score_highLight = high_light_detection(original)
+	if highLight:
+		issues.append("bright light")
+		name.append("bright light detection")
+		score.append(float(score_highLight))
+	else:
+		name.append("not bright lighting")
+		score.append(float(score_highLight))
 	
 	
 	end = time.time()
