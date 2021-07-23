@@ -18,6 +18,7 @@ def ML(path):
 	save = True
 	issues = []
 	score = []
+	name = []
 	d = Detect()
 	original, detected, bbox, confidences = d.detect_in_image(path)
 	try:
@@ -25,6 +26,7 @@ def ML(path):
 	except:
 		confidenceDetect = float(0)
 	score.append(float(confidenceDetect))
+	name.append("confidence")
 	if save:
 		cv2.imwrite('./output/detected.jpg', detected)
 	if len(bbox)>1:
@@ -34,7 +36,7 @@ def ML(path):
 		bbox = bbox[0]
 	else:
 		issues.append("No faces detected")
-		out = jsonable_encoder({"output":[{'issues':issues},{'score':[0]}]})
+		out = jsonable_encoder({"output":[{'issues':issues},{'score':[1]},{'name':['No face score']}]})
 		return out
 	
 	x,y,x1,y1 = bbox
@@ -46,8 +48,10 @@ def ML(path):
 	if blur:
 		issues.append("Face is Blurred")
 		score.append(float(1-float(blurScore)))
+		name.append("blurred image score")
 	else:
 		score.append(float(blurScore))
+		name.append("Not blurred image score")
 	resized, small = check_dimensions(original, img)
 	if save:
 		cv2.imwrite('./output/resized.jpg', resized)
@@ -57,10 +61,14 @@ def ML(path):
 	fake,score_realFake = check_real(resized[:,:,:])
 	if fake:
 		issues.append("Fake image")
-	score.append(float(score_realFake))
+		name.append("fake image score")
+		score.append(float(score_realFake))
+	else:
+		name.append("real image score")
+		score.append(float(score_realFake))
 	end = time.time()
 	# print("time : ",end-start)
-	out = jsonable_encoder({"output":[{'issues':issues},{'score':score}]})
+	out = jsonable_encoder({"output":[{'issues':issues},{'score':score},{"name":name}]})
 	return out
 
 if __name__ == '__main__':

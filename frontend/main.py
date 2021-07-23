@@ -37,11 +37,12 @@ def main():
         print(res)
         res1 = res["output"][0]
         res2 = res["output"][1]
+        res3 = res["output"][2]
         print(res1)
         if len(res1["issues"]) == 0:
-            st.write("valid image with score of :",res2)  
+            st.write("valid image with score of :",res2,res3)  
         else:
-            st.write("Invalid image with score of",res2)
+            st.write("Invalid image with score of",res1,res2,res3)
 
 
 if __name__ == "__main__":
