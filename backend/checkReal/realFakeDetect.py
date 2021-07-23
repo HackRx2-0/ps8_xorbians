@@ -21,4 +21,4 @@ def check_real(image):
         print(prediction[0][1])
         return (False,prediction[0][1])
     print(prediction[0][0])
-    return (True,prediction[0][0])
+    return (True,prediction[0][1])

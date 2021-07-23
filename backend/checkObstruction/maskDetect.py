@@ -6,7 +6,7 @@ import cv2
 import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-model = load_model("./checkObstruction/mask2.model")
+model = load_model("./checkObstruction/mask.model")
 
 def check_obstruct(image):
     # image = cv2.imread(image)
@@ -21,6 +21,6 @@ def check_obstruct(image):
         print(prediction[0][1])
         return (False,prediction[0][1])
     print(prediction[0][0])
-    return (True,prediction[0][0])
+    return (True,prediction[0][1])
 
 # check_real("imageOne.jpg")
