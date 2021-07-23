@@ -10,7 +10,7 @@ Our team, Xorbians, hopes to achieve a scalable, deployable, and maintainable Fa
 
 ## Scalability and Deployment:
 
-Our goal for this project revolves around memory-efficient high performing models. Each of our models is State-of-the-Art for both speeds as well as memory. We have displayed these in our Problem Statement slides, where we mention our preferred choice of models (best IoU, speed, memory). Even so, the models are expected to be multi-threaded to prevent bottlenecking and allow support for increased resource usage. 
+Our goal for this project revolves around memory-efficient high performing models. Each of our models is State-of-the-Art for both speeds as well as memory. We have displayed these in our [Problem Statement slides](https://github.com/HackRx2-0/ps8_xorbians#tackling-our-problem-statements), where we mention our preferred choice of models (best IoU, speed, memory). Even so, the models are expected to be multi-threaded to prevent bottlenecking and allow support for increased resource usage. 
 
 ## Maintenance:
 
