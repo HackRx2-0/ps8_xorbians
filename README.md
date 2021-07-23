@@ -6,22 +6,6 @@
 
 Our team, Xorbians, hopes to achieve a scalable, deployable, and maintainable Face Detection and Validation product for HackRx. Keeping in mind the above three factors, we surveyed and enlisted state-of-the-art modules supported and backed by Open Source and well-maintained products such as Tensorflow, FastAPI, and OpenCV.
 
-# Tackling our Problem Statements:
-
-![Order of Detection](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/order_of_detection.PNG)
-
-![Detection](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/detection.PNG)
-
-![Obstruction Blur Number](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/obstruction_blur_number.PNG)
-
-![Cartoon](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/cartoonification.PNG)
-
-![Professional](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/professional.PNG)
-
-![Live Face](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/live_face.PNG)
-
-![thumbnail](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/small_regions.PNG)
-
 # Scalability, Deployability, and Maintainability
 
 ## Scalability and Deployment:
@@ -48,3 +32,19 @@ All three of these base frameworks are open-sourced, backed by a large supportin
 1)FastApi<br />
 2)SteamLit<br />
 3)MongoDB<br />
+
+# Tackling our Problem Statements:
+
+![Order of Detection](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/order_of_detection.PNG)
+
+![Detection](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/detection.PNG)
+
+![Obstruction Blur Number](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/obstruction_blur_number.PNG)
+
+![Cartoon](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/cartoonification.PNG)
+
+![Professional](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/professional.PNG)
+
+![Live Face](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/live_face.PNG)
+
+![thumbnail](https://github.com/HackRx2-0/ps8_xorbians/blob/main/github_ready/small_regions.PNG)
