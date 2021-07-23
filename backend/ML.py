@@ -2,6 +2,8 @@ from opencv_dnn.detect import Detect
 from statical_methods.blur import check_blur
 from statical_methods.size import check_dimensions
 from checkReal.realFakeDetect import check_real
+from checkObstruction.maskDetect import check_obstruct
+from lighthingDetect.lightDetect import low_light_detection
 from fastapi.encoders import jsonable_encoder
 import cv2
 import numpy as np
@@ -66,6 +68,26 @@ def ML(path):
 	else:
 		name.append("real image score")
 		score.append(float(score_realFake))
+
+	obstruct,score_Obstruct = check_obstruct(resized[:,:,:])
+	if obstruct:
+		issues.append("Obstructed face")
+		name.append("obstructed face detection")
+		score.append(float(score_Obstruct))
+	else:
+		name.append("No obstruction detection")
+		score.append(float(score_Obstruct))
+	
+	lowLight,score_lowLight = low_light_detection(original)
+	if lowLight:
+		issues.append("low light")
+		name.append("low light detection")
+		score.append(float(score_Obstruct))
+	else:
+		name.append("normal lighting")
+		score.append(float(score_Obstruct))
+	
+	
 	end = time.time()
 	# print("time : ",end-start)
 	out = jsonable_encoder({"output":[{'issues':issues},{'score':score},{"name":name}]})
