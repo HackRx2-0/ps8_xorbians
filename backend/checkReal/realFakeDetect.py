@@ -19,6 +19,6 @@ def check_real(image):
     prediction = model.predict(x=data)
     if prediction[0][1] > prediction[0][0]:
         print(prediction[0][1])
-        return False
+        return (False,prediction[0][1])
     print(prediction[0][0])
-    return True
+    return (True,prediction[0][0])

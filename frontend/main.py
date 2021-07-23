@@ -34,10 +34,14 @@ def main():
         upload_uri = api_access+'/api/postImage/'
         response = requests.post(url = upload_uri, files = files)
         res = response.json()
-        if len(res["issues"]) == 0:
-            st.write("valid image")  
+        print(res)
+        res1 = res["output"][0]
+        res2 = res["output"][1]
+        print(res1)
+        if len(res1["issues"]) == 0:
+            st.write("valid image with score of :",res2)  
         else:
-            st.write(response.json())
+            st.write("Invalid image with score of",res2)
 
 
 if __name__ == "__main__":

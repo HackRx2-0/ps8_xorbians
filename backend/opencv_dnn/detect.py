@@ -25,6 +25,7 @@ class Detect:
         self.net.setInput(blob)
         faces = self.net.forward()
         boxes = []
+        confidences = []
         for i in range(faces.shape[2]):
             confidence = faces[0, 0, i, 2]
             if confidence > 0.5:
@@ -32,7 +33,8 @@ class Detect:
                 (x, y, x1, y1) = box.astype("int")
                 cv2.rectangle(img, (x, y), (x1, y1), (0, 0, 255), 2)
                 boxes.append([x, y, x1, y1])
-        return orig, img, boxes
+                confidences.append(confidence)
+        return orig, img, boxes, confidences
 
 if __name__ == '__main__':
     d = Detect()
