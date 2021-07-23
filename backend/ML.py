@@ -76,7 +76,7 @@ def ML(path):
 		cv2.imwrite('./output/resized.jpg', resized)
 	if small:
 		issues.append("Too small")
-	score.append(float(scalePercent))
+	score.append(float(1/scalePercent))
 	name.append("Ratio of scaling required")
 
 	fake,score_realFake = check_real(resized[:,:,:])

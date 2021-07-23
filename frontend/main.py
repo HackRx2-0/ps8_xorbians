@@ -37,12 +37,15 @@ def main():
         print(res)
         res1 = res["output"][0]
         res2 = res["output"][1]
+        scoreList = res2["score"]
         res3 = res["output"][2]
+        nameList = res3["name"]
+        scoreRes = {i:j for i,j in zip(nameList,scoreList)}
         print(res1)
         if len(res1["issues"]) == 0:
-            st.write("valid image with score of :",res2,res3)  
+            st.write("valid image with score of :",scoreRes)  
         else:
-            st.write("Invalid image with score of",res1,res2,res3)
+            st.write("Invalid image with score of",res1,scoreRes)
 
 
 if __name__ == "__main__":

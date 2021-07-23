@@ -6,7 +6,7 @@ import cv2
 import os
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-model = load_model("./checkObstruction/mask.model")
+model = load_model("./checkObstruction/liveness.model")
 
 def check_obstruct(image):
     # image = cv2.imread(image)
