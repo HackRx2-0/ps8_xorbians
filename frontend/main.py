@@ -49,7 +49,7 @@ def main():
         if len(res1["issues"]) == 0:
             st.write("valid image with score of :",scoreRes)  
         else:
-            st.write("Invalid image with score of",res1,scoreRes)
+            st.write("Invalid image detected\n",res1["issues"][0],scoreRes)
         end = time.time()
         st.write("Total response time (in seconds) :",round(end-startTime,4))
 

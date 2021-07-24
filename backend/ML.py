@@ -100,6 +100,15 @@ def ML(path):
 	if save:
 		cv2.imwrite('./output/thumbnail.jpg',thumbnail)
 	
+	fake,score_realFake = check_real(resized[:,:,:])
+	if fake:
+		issues.append("Fake image")
+		name.append("Fake image score")
+		score.append(float(score_realFake))
+	else:
+		name.append("Real image score")
+		score.append(float(score_realFake))
+
 	obstruct,score_Obstruct = check_obstruct(resized[:,:,:])
 	if obstruct:
 		issues.append("Obstructed face")
@@ -109,14 +118,6 @@ def ML(path):
 		name.append("No obstruction detection")
 		score.append(float(score_Obstruct))
 	
-	fake,score_realFake = check_real(resized[:,:,:])
-	if fake:
-		issues.append("Fake image")
-		name.append("Fake image score")
-		score.append(float(score_realFake))
-	else:
-		name.append("Real image score")
-		score.append(float(score_realFake))
 	
 	
 	end = time.time()
